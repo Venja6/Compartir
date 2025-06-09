@@ -17,6 +17,14 @@
 
 using namespace std;
 
+
+//-----Swap-----
+void swap(int& A, int& B){
+    int aux = A;
+    A = B; 
+    B = aux;
+}
+
 //-----Creacion de vectores-----
 
 vector<int32_t> crear_vector_random(int size){
@@ -244,6 +252,55 @@ vector<int32_t> selection_sort(vector<int32_t> vec){
 	}
 	return vec;
 }
+
+//-----Bubble-----
+vector<int> buble_sort(vector<int> vec){
+    bool cambio = true;
+    int ultimo_ordenado = vec.size();
+    while(ultimo_ordenado > 0 && cambio == true){
+        cambio = false;
+        for(int i = 0; i < ultimo_ordenado - 1; i++){
+            if(vec[i] > vec[i+1]){
+                swap(vec[i], vec[i+1]);
+                cambio = true;
+            }
+        }
+        ultimo_ordenado--;
+    }
+    return vec;
+}
+
+//-----Counting-----
+vector<int> counting_sort(vector<int> vec){
+    int max = 0;
+    //buscamos el maximo elemento 
+    for(int i = 0; i < vec.size(); i++){
+        if(max < vec[i]){
+            max = vec[i];
+        }
+    }
+    //creamos un vector que tenga todos los elementos posibles
+    vector<int> val(max+1,0);
+    
+    //por cada aparicion de un elemento sumamos uno a su pocicion, y asi podemos repetirlos luego
+    for(int i = 0; i < vec.size(); i++){
+        val[vec[i]]++;
+    }
+    
+    int j = 0;
+
+    //copiamos en el vecor original todos los elementos y las veces q aparecen de manera ordenada
+    for(int i = 0; i < max; i++){
+        while(val[i] > 0){
+            vec[j] = i;
+            j++;
+            val[i]--;
+        }
+    }
+    return vec;
+}
+
+
 
 //Lectura de vector
 vector<int32_t> leer_vector(const string& filename) {
